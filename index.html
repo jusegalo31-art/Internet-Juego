@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Aventura en el Internet! 🌐 - Juego para 2° de Primaria</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Fondo animado de red digital -->
+  <div class="bg-decorations" id="bgDecorations"></div>
+
+  <!-- Barra Superior Permanente -->
+  <header class="top-bar">
+    <div class="brand" id="btnHome" title="Volver al Mapa">
+      <span class="brand-icon">🌐</span>
+      <span class="brand-title">Aventura en el Internet</span>
+      <span class="grade-badge">2° Primaria</span>
+    </div>
+
+    <div class="player-hud" id="playerHud">
+      <div class="hud-pill avatar-pill">
+        <span id="hudAvatar">🤖</span>
+        <span id="hudName">Explorador</span>
+      </div>
+      <div class="hud-pill stars-pill" title="Estrellas ganadas">
+        <span>⭐</span>
+        <span id="hudStars">0 / 12</span>
+      </div>
+      <div class="hud-pill megas-pill" title="MegaBytes recolectados">
+        <span>⚡</span>
+        <span id="hudScore">0</span> <small>MB</small>
+      </div>
+    </div>
+
+    <div class="top-controls">
+      <button class="icon-btn" id="btnVoiceToggle" title="Activar/Desactivar Voz de Bit">
+        🗣️ <span class="btn-label">Voz: SÍ</span>
+      </button>
+      <button class="icon-btn" id="btnSoundToggle" title="Activar/Desactivar Sonidos">
+        🔊 <span class="btn-label">Sonido</span>
+      </button>
+      <button class="icon-btn teacher-btn" id="btnTeacherMode" title="Acceso rápido para el profesor">
+        👩‍🏫 <span class="btn-label">Modo Profe</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal de Pantallas -->
+  <main class="game-container">
+
+    <!-- ==================== PANTALLA 0: BIENVENIDA ==================== -->
+    <section class="screen active" id="screenWelcome">
+      <div class="welcome-card">
+        <div class="bit-mascot-hero">
+          <div class="wifi-rings">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="robot-face">🤖</div>
+        </div>
+        <h1 class="hero-title">¡Hola! Soy <span class="highlight-cyan">BIT</span></h1>
+        <p class="hero-subtitle">
+          ¡Hoy vamos a viajar por dentro de los cables y las ondas Wi-Fi para descubrir <strong>qué es el Internet y cómo funciona</strong>!
+        </p>
+
+        <div class="setup-box">
+          <div class="setup-row">
+            <label for="playerNameInput">1. ¿Cómo te llamas?</label>
+            <input
+              type="text"
+              id="playerNameInput"
+              maxlength="18"
+              placeholder="Escribe tu nombre aquí..."
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="setup-row">
+            <label>2. Elige tu personaje digital:</label>
+            <div class="avatar-grid" id="avatarSelector">
+              <button class="avatar-option selected" data-avatar="🤖">🤖<span>Robot Bit</span></button>
+              <button class="avatar-option" data-avatar="🚀">🚀<span>Astro Red</span></button>
+              <button class="avatar-option" data-avatar="🦊">🦊<span>Zorrito Web</span></button>
+              <button class="avatar-option" data-avatar="🐱">🐱<span>Gato Cyber</span></button>
+              <button class="avatar-option" data-avatar="🦄">🦄<span>Unicornio</span></button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary btn-giant pulse-anim" id="btnStartAdventure">
+          🚀 ¡COMENZAR LA AVENTURA!
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== PANTALLA 1: MAPA DEL INTERNET ==================== -->
+    <section class="screen" id="screenMap">
+      <div class="bit-helper-banner">
+        <div class="bit-avatar-mini" id="mapBitAvatar">🤖</div>
+        <div class="bit-speech-bubble">
+          <p id="mapSpeechText">
+            ¡Bienvenido al <strong>Mapa del Internet</strong>! Completa las 4 misiones para convertirte en un Maestro de la Red.
+          </p>
+        </div>
+        <button class="btn-speak" id="btnSpeakMap" title="Escuchar a Bit">🔊 Escuchar</button>
+      </div>
+
+      <div class="missions-grid">
+        <!-- Misión 1 -->
+        <div class="mission-card unlocked" data-level="1" id="cardLevel1">
+          <div class="mission-number">Misión 1</div>
+          <div class="mission-icon">🌍🔌</div>
+          <h3>¿Qué es el Internet?</h3>
+          <p>Conecta casas, escuelas, rúters y cables submarinos para crear la Gran Red Mundial.</p>
+          <div class="mission-stars" id="starsLevel1">☆☆☆</div>
+          <button class="btn-mission">¡Jugar Misión 1!</button>
+        </div>
+
+        <!-- Misión 2 -->
+        <div class="mission-card" data-level="2" id="cardLevel2">
+          <div class="mission-number">Misión 2</div>
+          <div class="mission-icon">📦🏎️</div>
+          <h3>Carrera de Paquetes</h3>
+          <p>Descubre cómo viajan tus dibujos y videos cortados en pedacitos por la autopista digital.</p>
+          <div class="mission-stars" id="starsLevel2">☆☆☆</div>
+          <button class="btn-mission">¡Jugar Misión 2!</button>
+        </div>
+
+        <!-- Misión 3 -->
+        <div class="mission-card" data-level="3" id="cardLevel3">
+          <div class="mission-number">Misión 3</div>
+          <div class="mission-icon">🏢🔍</div>
+          <h3>Detective de Servidores</h3>
+          <p>Aprende dónde viven las páginas web y envía cada búsqueda al Servidor correcto.</p>
+          <div class="mission-stars" id="starsLevel3">☆☆☆</div>
+          <button class="btn-mission">¡Jugar Misión 3!</button>
+        </div>
+
+        <!-- Misión 4 -->
+        <div class="mission-card" data-level="4" id="cardLevel4">
+          <div class="mission-number">Misión 4</div>
+          <div class="mission-icon">🛡️🏆</div>
+          <h3>Escudo Protector y Reto Final</h3>
+          <p>Detén a los virus traviesos, protege tu información y gana tu Diploma del Internet.</p>
+          <div class="mission-stars" id="starsLevel4">☆☆☆</div>
+          <button class="btn-mission">¡Jugar Misión 4!</button>
+        </div>
+      </div>
+
+      <div class="concept-dictionary">
+        <h4>📖 Diccionario Rápido de Bit (Haz clic en una palabra para escucharla):</h4>
+        <div class="glossary-chips">
+          <button class="chip" data-term="internet">🌐 <strong>Internet:</strong> Una red gigante de computadoras conectadas en todo el mundo.</button>
+          <button class="chip" data-term="router">📡 <strong>Rúter (Módem):</strong> La cajita de tu casa que reparte el Internet por Wi-Fi o cable.</button>
+          <button class="chip" data-term="paquetes">📦 <strong>Paquetes:</strong> Pedacitos pequeños en los que se divide una foto o video para viajar rápido.</button>
+          <button class="chip" data-term="servidor">🏢 <strong>Servidor:</strong> Una supercomputadora donde se guardan los juegos, videos y páginas web.</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MISIÓN 1: CONECTA LA RED MUNDIAL ==================== -->
+    <section class="screen" id="screenLevel1">
+      <div class="level-header">
+        <button class="btn-back" data-goto="screenMap">⬅ Volver al Mapa</button>
+        <h2>🌍 Misión 1: ¡Construye la Gran Red del Internet!</h2>
+        <div class="level-step-indicator" id="l1StepBadge">Etapa 1 de 3</div>
+      </div>
+
+      <div class="bit-instruction-bar">
+        <span class="bit-mini">🤖</span>
+        <p id="l1InstructionText">
+          ¡El Internet NO es una nube mágica! Es una <strong>red de dispositivos conectados</strong>. Haz clic en los nodos brillantes para conectar tu casa con el mundo.
+        </p>
+        <button class="btn-speak-small" data-speak-target="l1InstructionText">🔊</button>
+      </div>
+
+      <div class="network-builder-stage">
+        <canvas id="canvasLevel1" width="900" height="430"></canvas>
+
+        <!-- Controles superpuestos de la Misión 1 -->
+        <div class="l1-action-panel" id="l1ActionPanel">
+          <div class="l1-status" id="l1StatusMsg">👆 Haz clic en un dispositivo y luego en otro para conectarlos</div>
+          <button class="btn-primary hidden" id="btnL1SendTest">📨 ¡Enviar Mensaje de Prueba!</button>
+          <button class="btn-success hidden" id="btnL1NextStage">✨ ¡Siguiente Etapa!</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MISIÓN 2: CARRERA DE PAQUETES ==================== -->
+    <section class="screen" id="screenLevel2">
+      <div class="level-header">
+        <button class="btn-back" data-goto="screenMap">⬅ Volver al Mapa</button>
+        <h2>📦 Misión 2: ¡El Viaje de los Paquetes de Datos!</h2>
+        <div class="level-step-indicator" id="l2StepBadge">Paso 1: Elige tu envío</div>
+      </div>
+
+      <div class="bit-instruction-bar">
+        <span class="bit-mini">🤖</span>
+        <p id="l2InstructionText">
+          Cuando mandas un dibujo por Internet, ¡es muy grande para pasar entero por el cable! Primero la computadora lo corta en <strong>Paquetes</strong>.
+        </p>
+        <button class="btn-speak-small" data-speak-target="l2InstructionText">🔊</button>
+      </div>
+
+      <!-- Sub-fase 2A: Máquina Cortadora de Paquetes -->
+      <div class="l2-stage" id="l2StageSlicer">
+        <h3>1. ¿Qué quieres enviarle a tu mejor amigo por Internet?</h3>
+        <div class="drawing-choices" id="drawingChoices">
+          <button class="drawing-btn selected" data-item="dino" data-emoji="🦖" data-name="Dibujo de Dinosaurio">
+            <span class="big-emoji">🦖</span>
+            <strong>Dibujo de Dinosaurio</strong>
+          </button>
+          <button class="drawing-btn" data-item="cake" data-emoji="🎂" data-name="Foto de Pastel">
+            <span class="big-emoji">🎂</span>
+            <strong>Foto de Pastel</strong>
+          </button>
+          <button class="drawing-btn" data-item="rocket" data-emoji="🚀" data-name="Video de Cohete">
+            <span class="big-emoji">🚀</span>
+            <strong>Video de Cohete</strong>
+          </button>
+        </div>
+
+        <div class="slicer-machine">
+          <div class="slicer-preview" id="slicerPreview">
+            <div class="whole-image" id="wholeImageDisplay">🦖</div>
+            <div class="packets-container hidden" id="packetsDisplay">
+              <div class="packet-box" style="--delay:0s">📦 Paquete 1/4</div>
+              <div class="packet-box" style="--delay:0.15s">📦 Paquete 2/4</div>
+              <div class="packet-box" style="--delay:0.3s">📦 Paquete 3/4</div>
+              <div class="packet-box" style="--delay:0.45s">📦 Paquete 4/4</div>
+            </div>
+          </div>
+          <button class="btn-primary btn-giant" id="btnSlicePackets">
+            ✂️ ¡DIVIDIR EN 4 PAQUETES!
+          </button>
+          <button class="btn-success btn-giant hidden" id="btnStartHighway">
+            🏎️ ¡LLEVAR PAQUETES POR EL CABLE!
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-fase 2B: Autopista de Fibra Óptica (Arcade) -->
+      <div class="l2-stage hidden" id="l2StageHighway">
+        <div class="highway-hud">
+          <div class="packets-collected" id="l2PacketsHud">
+            Paquetes recuperados: <span id="l2PacketCount">0</span> / 4 📦
+          </div>
+          <div class="highway-controls-hint">
+            Usa las flechas <strong>⬆ Arriba / ⬇ Abajo</strong> o los botones de la derecha
+          </div>
+        </div>
+        <div class="highway-arena">
+          <canvas id="canvasLevel2" width="780" height="360"></canvas>
+          <div class="touch-lane-controls">
+            <button class="lane-btn" id="btnLaneUp">⬆<br><small>Subir</small></button>
+            <button class="lane-btn" id="btnLaneDown">⬇<br><small>Bajar</small></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-fase 2C: Armar los Paquetes al llegar -->
+      <div class="l2-stage hidden" id="l2StageAssemble">
+        <h3>🎉 ¡Llegaron a la computadora de tu amigo! Ahora ordénalos del 1 al 4:</h3>
+        <div class="assemble-board">
+          <div class="scrambled-packets" id="scrambledPackets"></div>
+          <div class="arrow-divider">➡</div>
+          <div class="computer-screen-preview">
+            <div class="screen-header">💻 Pantalla de tu Amigo</div>
+            <div class="assembled-slots" id="assembledSlots">
+              <div class="slot" data-slot="1">1</div>
+              <div class="slot" data-slot="2">2</div>
+              <div class="slot" data-slot="3">3</div>
+              <div class="slot" data-slot="4">4</div>
+            </div>
+            <div class="final-revealed-emoji hidden" id="finalRevealedEmoji">🦖</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MISIÓN 3: DETECTIVE DE SERVIDORES ==================== -->
+    <section class="screen" id="screenLevel3">
+      <div class="level-header">
+        <button class="btn-back" data-goto="screenMap">⬅ Volver al Mapa</button>
+        <h2>🏢 Misión 3: ¡El Detective de los Servidores!</h2>
+        <div class="level-step-indicator" id="l3ScoreBadge">Peticiones resueltas: 0 / 6</div>
+      </div>
+
+      <div class="bit-instruction-bar">
+        <span class="bit-mini">🤖</span>
+        <p id="l3InstructionText">
+          Las páginas web, videos y juegos se guardan en supercomputadoras llamadas <strong>SERVIDORES</strong>. ¡Lee lo que pide cada niño y envíalo al Servidor correcto!
+        </p>
+        <button class="btn-speak-small" data-speak-target="l3InstructionText">🔊</button>
+      </div>
+
+      <div class="servers-game-board">
+        <!-- Cliente haciendo una petición -->
+        <div class="client-request-card" id="clientRequestCard">
+          <div class="client-kid" id="clientKidEmoji">👧</div>
+          <div class="request-bubble">
+            <span class="request-tag">🔍 Petición por Internet:</span>
+            <h3 id="requestText">"¡Quiero ver una caricatura de perritos espaciales!"</h3>
+          </div>
+        </div>
+
+        <!-- Animación de cable central -->
+        <div class="router-hub" id="routerHub">
+          <div class="pulse-line" id="serverPulseLine"></div>
+          <div class="router-badge">📡 RÚTER CENTRAL: ¿A qué Servidor mandamos la petición?</div>
+        </div>
+
+        <!-- Los 4 Grandes Servidores -->
+        <div class="servers-grid">
+          <button class="server-rack" data-server="video">
+            <div class="server-lights"><span></span><span></span><span></span></div>
+            <div class="server-icon">🎬</div>
+            <h4>Servidor de Videos</h4>
+            <p>Películas, caricaturas y videos divertidos</p>
+          </button>
+
+          <button class="server-rack" data-server="games">
+            <div class="server-lights"><span></span><span></span><span></span></div>
+            <div class="server-icon">🎮</div>
+            <h4>Servidor de Juegos</h4>
+            <p>Videojuegos en línea y mundos virtuales</p>
+          </button>
+
+          <button class="server-rack" data-server="school">
+            <div class="server-lights"><span></span><span></span><span></span></div>
+            <div class="server-icon">📚</div>
+            <h4>Servidor de Biblioteca</h4>
+            <p>Enciclopedias, tareas, cuentos y ciencia</p>
+          </button>
+
+          <button class="server-rack" data-server="music">
+            <div class="server-lights"><span></span><span></span><span></span></div>
+            <div class="server-icon">🎵</div>
+            <h4>Servidor de Música</h4>
+            <p>Canciones, sonidos y conciertos</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MISIÓN 4: ESCUDO PROTECTOR Y GRAN FINAL ==================== -->
+    <section class="screen" id="screenLevel4">
+      <div class="level-header">
+        <button class="btn-back" data-goto="screenMap">⬅ Volver al Mapa</button>
+        <h2>🛡️ Misión 4: ¡Guardián del Internet Seguro!</h2>
+        <div class="level-step-indicator" id="l4Badge">Fase 1: Escudo Protector</div>
+      </div>
+
+      <div class="bit-instruction-bar">
+        <span class="bit-mini">🤖</span>
+        <p id="l4InstructionText">
+          Por el Internet viajan cosas geniales, pero también hay <strong>Virus traviesos</strong> y extraños. ¡Haz clic en las tarjetas para decidir si <strong>DEJAR PASAR ✅</strong> o <strong>BLOQUEAR 🛡️</strong>!
+        </p>
+        <button class="btn-speak-small" data-speak-target="l4InstructionText">🔊</button>
+      </div>
+
+      <div class="firewall-stage" id="firewallStage">
+        <div class="firewall-progress" id="firewallProgress">Caso 1 de 6</div>
+
+        <div class="incoming-packet-card" id="incomingPacketCard">
+          <div class="packet-big-icon" id="fwIcon">📸</div>
+          <h3 id="fwTitle">Foto de vacaciones de tu abuelita</h3>
+          <p id="fwDesc">Viene de la tableta de tu familia con un saludo cariñoso.</p>
+        </div>
+
+        <div class="firewall-buttons">
+          <button class="btn-allow" id="btnFwAllow">
+            ✅ ¡DEJAR PASAR!<br><small>Es seguro y bueno</small>
+          </button>
+          <button class="btn-block" id="btnFwBlock">
+            🛡️ ¡ESCUDO BLOQUEADOR!<br><small>Es peligroso o virus</small>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PANTALLA DE DIPLOMA FINAL ==================== -->
+    <section class="screen" id="screenCertificate">
+      <div class="certificate-card">
+        <div class="cert-ribbon">🏆 DIPLOMA OFICIAL DE 2° DE PRIMARIA 🏆</div>
+        <h1>¡Experto Maestro del Internet!</h1>
+        <p class="cert-lead">Este certificado se otorga con orgullo a:</p>
+        <div class="cert-student-name" id="certStudentName">Explorador</div>
+
+        <div class="cert-achievements">
+          <div class="cert-badge">🌍<span>Conectó la Red Mundial</span></div>
+          <div class="cert-badge">📦<span>Guió los Paquetes de Datos</span></div>
+          <div class="cert-badge">🏢<span>Dominó los Servidores</span></div>
+          <div class="cert-badge">🛡️<span>Guardián del Internet Seguro</span></div>
+        </div>
+
+        <p class="cert-summary">
+          Ahora sabes que el <strong>Internet</strong> es una gran red mundial que conecta dispositivos usando <strong>Wi-Fi, rúters y cables submarinos</strong>, enviando la información en <strong>paquetes</strong> desde los <strong>servidores</strong>.
+        </p>
+
+        <div class="cert-actions">
+          <button class="btn-primary btn-giant" id="btnBackToMapFromCert">🗺️ Volver al Mapa para Jugar</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL DE CELEBRACIÓN ENTRE NIVELES ==================== -->
+  <div class="modal-overlay hidden" id="victoryModal">
+    <div class="modal-box">
+      <div class="modal-trophy" id="modalTrophy">⭐⭐⭐</div>
+      <h2 id="modalTitle">¡Misión Completada!</h2>
+      <p id="modalMessage">¡Increíble trabajo! Aprendiste cómo se conectan las computadoras.</p>
+      <div class="modal-learned-box" id="modalLearnedBox">
+        <strong>💡 ¿Qué aprendimos hoy?</strong>
+        <p id="modalLessonText"></p>
+      </div>
+      <button class="btn-primary btn-giant" id="btnModalContinue">🚀 ¡Continuar!</button>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL MODO PROFESOR ==================== -->
+  <div class="modal-overlay hidden" id="teacherModal">
+    <div class="modal-box teacher-modal-box">
+      <h2>👩‍🏫 Panel para el Profesor (2° de Primaria)</h2>
+      <p>Desde aquí puedes saltar directamente a cualquier actividad durante tu clase o desbloquear todas las misiones:</p>
+      <div class="teacher-actions">
+        <button class="btn-secondary" data-teacher-goto="1">🌍 Ir a Misión 1: ¿Qué es el Internet? (Red, Wi-Fi y Cables)</button>
+        <button class="btn-secondary" data-teacher-goto="2">📦 Ir a Misión 2: ¿Cómo viajan los datos? (Paquetes)</button>
+        <button class="btn-secondary" data-teacher-goto="3">🏢 Ir a Misión 3: ¿Dónde viven las webs? (Servidores)</button>
+        <button class="btn-secondary" data-teacher-goto="4">🛡️ Ir a Misión 4: Internet Seguro (Cortafuegos)</button>
+        <button class="btn-secondary" data-teacher-goto="cert">🏆 Ver Diploma Final</button>
+        <button class="btn-primary" id="btnUnlockAll">🔓 Desbloquear todas las misiones</button>
+      </div>
+      <button class="btn-back" id="btnCloseTeacherModal">Cerrar ventana</button>
+    </div>
+  </div>
+
+  <!-- Lienzo de Confeti para celebraciones -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="game.js"></script>
+</body>
+</html>

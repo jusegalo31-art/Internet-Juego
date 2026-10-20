@@ -1,0 +1,1352 @@
+/* ==========================================================================
+   AVENTURA EN EL INTERNET - ESTILOS VISUALES (2° DE PRIMARIA)
+   ========================================================================== */
+
+:root {
+  --bg-deep: #0f172a;
+  --bg-card: #1e293b;
+  --bg-surface: #ffffff;
+  --primary: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --cyan: #06b6d4;
+  --cyan-glow: #22d3ee;
+  --yellow: #facc15;
+  --orange: #f97316;
+  --green: #22c55e;
+  --green-dark: #15803d;
+  --red: #ef4444;
+  --red-dark: #b91c1c;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --text-dark: #0f172a;
+  --text-muted: #475569;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --shadow-pop: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: 'Segoe UI', 'Comic Sans MS', 'Trebuchet MS', system-ui, sans-serif;
+  background: radial-gradient(circle at top, #1e3a8a 0%, #0f172a 75%);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fondo decorativo con nodos flotantes */
+.bg-decorations {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(rgba(34, 211, 238, 0.14) 2px, transparent 2px),
+    radial-gradient(rgba(250, 204, 21, 0.1) 2px, transparent 2px);
+  background-size: 48px 48px;
+  background-position: 0 0, 24px 24px;
+}
+
+/* ==========================================================================
+   BARRA SUPERIOR (HUD)
+   ========================================================================== */
+.top-bar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 22px;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 3px solid rgba(34, 211, 238, 0.35);
+  color: #fff;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.brand:hover {
+  transform: scale(1.03);
+}
+
+.brand-icon {
+  font-size: 1.9rem;
+  filter: drop-shadow(0 0 8px var(--cyan));
+}
+
+.brand-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  background: linear-gradient(90deg, #38bdf8, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grade-badge {
+  background: var(--purple);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.5);
+}
+
+.player-hud {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hud-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  padding: 5px 14px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stars-pill {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+.megas-pill {
+  border-color: var(--cyan-glow);
+  color: var(--cyan-glow);
+}
+
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: #334155;
+  color: #fff;
+  border: 2px solid #64748b;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+
+.icon-btn:hover {
+  background: #475569;
+  transform: translateY(-2px);
+}
+
+.teacher-btn {
+  background: #7c3aed;
+  border-color: #a78bfa;
+}
+
+/* ==========================================================================
+   CONTENEDOR DE PANTALLAS
+   ========================================================================== */
+.game-container {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.screen {
+  display: none;
+  animation: fadeInPop 0.35s ease-out;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeInPop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   PANTALLA 0: BIENVENIDA
+   ========================================================================== */
+.welcome-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+  border: 4px solid #38bdf8;
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  text-align: center;
+  box-shadow: var(--shadow-pop), 0 0 35px rgba(56, 189, 248, 0.25);
+  max-width: 720px;
+  margin: 10px auto;
+}
+
+.bit-mascot-hero {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.robot-face {
+  font-size: 4.5rem;
+  z-index: 2;
+  animation: floatBot 2.5s ease-in-out infinite;
+}
+
+@keyframes floatBot {
+  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+.wifi-rings span {
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--cyan);
+  border-radius: 50%;
+  opacity: 0;
+  animation: wifiPulse 2.4s infinite;
+}
+.wifi-rings span:nth-child(2) { animation-delay: 0.8s; }
+.wifi-rings span:nth-child(3) { animation-delay: 1.6s; }
+
+@keyframes wifiPulse {
+  0% { transform: scale(0.5); opacity: 0.8; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+.hero-title {
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.highlight-cyan {
+  color: #0284c7;
+  text-decoration: underline wavy #facc15;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #334155;
+  line-height: 1.5;
+  max-width: 580px;
+  margin: 0 auto 20px;
+}
+
+.setup-box {
+  background: #e0f2fe;
+  border: 2px dashed #38bdf8;
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 22px;
+}
+
+.setup-row {
+  margin-bottom: 16px;
+}
+.setup-row:last-child {
+  margin-bottom: 0;
+}
+
+.setup-row label {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0369a1;
+  margin-bottom: 8px;
+}
+
+#playerNameInput {
+  width: 100%;
+  max-width: 340px;
+  padding: 12px 18px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: 3px solid #38bdf8;
+  border-radius: 14px;
+  text-align: center;
+  outline: none;
+  color: #0f172a;
+  background: #fff;
+}
+
+#playerNameInput:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.25);
+}
+
+.avatar-grid {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.avatar-option {
+  background: #ffffff;
+  border: 3px solid #bae6fd;
+  border-radius: 16px;
+  padding: 10px 14px;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  min-width: 95px;
+}
+
+.avatar-option span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.avatar-option:hover {
+  transform: translateY(-4px);
+  border-color: #38bdf8;
+}
+
+.avatar-option.selected {
+  background: #fef9c3;
+  border-color: #f97316;
+  transform: scale(1.07);
+  box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3);
+}
+
+/* Botones Generales */
+.btn-primary, .btn-success, .btn-secondary {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 800;
+  border-radius: 18px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-giant {
+  font-size: 1.35rem;
+  padding: 15px 34px;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+  color: #fff;
+  box-shadow: 0 6px 0 #9a3412, 0 10px 20px rgba(234, 88, 12, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 #9a3412, 0 14px 24px rgba(234, 88, 12, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #9a3412;
+}
+
+.btn-success {
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+  color: #fff;
+  box-shadow: 0 6px 0 #14532d, 0 10px 20px rgba(34, 197, 94, 0.4);
+  padding: 12px 26px;
+  font-size: 1.15rem;
+}
+
+.pulse-anim {
+  animation: gentlePulse 2s infinite;
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* ==========================================================================
+   PANTALLA 1: MAPA DEL INTERNET
+   ========================================================================== */
+.bit-helper-banner {
+  background: #ffffff;
+  border: 4px solid #38bdf8;
+  border-radius: 20px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-pop);
+}
+
+.bit-avatar-mini {
+  font-size: 3rem;
+  background: #e0f2fe;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 3px solid #0284c7;
+}
+
+.bit-speech-bubble {
+  flex: 1;
+  font-size: 1.18rem;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.btn-speak {
+  background: #0284c7;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.btn-speak:hover {
+  background: #0369a1;
+}
+
+.missions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.mission-card {
+  background: #ffffff;
+  border: 4px solid #cbd5e1;
+  border-radius: 22px;
+  padding: 18px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s;
+  position: relative;
+  box-shadow: var(--shadow-pop);
+  cursor: pointer;
+}
+
+.mission-card.unlocked {
+  border-color: #38bdf8;
+}
+
+.mission-card.completed {
+  border-color: #22c55e;
+  background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.mission-card:hover {
+  transform: translateY(-6px);
+}
+
+.mission-number {
+  align-self: center;
+  background: #0284c7;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 99px;
+  margin-bottom: 8px;
+}
+
+.mission-icon {
+  font-size: 3.1rem;
+  margin: 6px 0;
+}
+
+.mission-card h3 {
+  font-size: 1.25rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.mission-card p {
+  font-size: 0.96rem;
+  color: #475569;
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+
+.mission-stars {
+  font-size: 1.5rem;
+  color: #f59e0b;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.btn-mission {
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #1e40af;
+}
+
+.mission-card.completed .btn-mission {
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+  box-shadow: 0 4px 0 #15803d;
+}
+
+/* Diccionario rápido */
+.concept-dictionary {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 16px 20px;
+  border: 3px solid #a855f7;
+}
+
+.concept-dictionary h4 {
+  color: #6b21a8;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.glossary-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.chip {
+  background: #f3e8ff;
+  border: 2px solid #d8b4fe;
+  border-radius: 14px;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 0.92rem;
+  color: #3b0764;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+  line-height: 1.35;
+}
+
+.chip:hover {
+  background: #e9d5ff;
+  transform: scale(1.02);
+}
+
+/* ==========================================================================
+   ENCABEZADOS DE NIVEL E INSTRUCCIONES
+   ========================================================================== */
+.level-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(15, 23, 42, 0.85);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 18px;
+  margin-bottom: 12px;
+  border: 2px solid rgba(56, 189, 248, 0.4);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.level-header h2 {
+  font-size: 1.35rem;
+  color: #facc15;
+}
+
+.btn-back {
+  background: #334155;
+  color: #fff;
+  border: 2px solid #94a3b8;
+  padding: 7px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-back:hover {
+  background: #475569;
+}
+
+.level-step-indicator {
+  background: #0284c7;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.bit-instruction-bar {
+  background: #fef9c3;
+  border: 3px solid #eab308;
+  border-radius: 18px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.bit-mini {
+  font-size: 2.2rem;
+}
+
+.bit-instruction-bar p {
+  flex: 1;
+  font-size: 1.15rem;
+  color: #1e293b;
+  line-height: 1.35;
+}
+
+.btn-speak-small {
+  background: #eab308;
+  border: none;
+  font-size: 1.3rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   MISIÓN 1: CONECTA LA RED MUNDIAL (CANVAS INTERACTIVO)
+   ========================================================================== */
+.network-builder-stage {
+  background: #ffffff;
+  border: 4px solid #38bdf8;
+  border-radius: 22px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: var(--shadow-pop);
+}
+
+#canvasLevel1 {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  border-radius: 16px;
+  background: #0c4a6e;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.l1-action-panel {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.l1-status {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0369a1;
+  background: #e0f2fe;
+  padding: 10px 20px;
+  border-radius: 14px;
+}
+
+/* ==========================================================================
+   MISIÓN 2: CARRERA DE PAQUETES
+   ========================================================================== */
+.l2-stage {
+  background: #ffffff;
+  border: 4px solid #38bdf8;
+  border-radius: 22px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow-pop);
+}
+
+.l2-stage h3 {
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 14px;
+}
+
+.drawing-choices {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.drawing-btn {
+  background: #f8fafc;
+  border: 3px solid #cbd5e1;
+  border-radius: 18px;
+  padding: 14px 22px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.drawing-btn .big-emoji {
+  font-size: 3.2rem;
+}
+
+.drawing-btn strong {
+  font-size: 1.05rem;
+  color: #1e293b;
+}
+
+.drawing-btn.selected {
+  background: #fef9c3;
+  border-color: #f97316;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(249, 115, 22, 0.25);
+}
+
+.slicer-machine {
+  background: #0f172a;
+  border-radius: 18px;
+  padding: 20px;
+  color: #fff;
+}
+
+.slicer-preview {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.whole-image {
+  font-size: 5rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 14px 36px;
+  border-radius: 20px;
+  border: 3px dashed #38bdf8;
+}
+
+.packets-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.packet-box {
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  border: 3px solid #facc15;
+  padding: 16px 20px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #fff;
+  animation: popPacket 0.4s ease-out backwards;
+  animation-delay: var(--delay, 0s);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.6);
+}
+
+@keyframes popPacket {
+  from { transform: scale(0.3) rotate(-12deg); opacity: 0; }
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Autopista de Fibra Óptica */
+.highway-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.packets-collected {
+  background: #0284c7;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 12px;
+}
+
+.highway-controls-hint {
+  color: #334155;
+  font-size: 1rem;
+}
+
+.highway-arena {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+#canvasLevel2 {
+  width: 100%;
+  max-width: 780px;
+  height: auto;
+  background: #090d16;
+  border-radius: 16px;
+  border: 3px solid #22d3ee;
+}
+
+.touch-lane-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lane-btn {
+  background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+  color: #fff;
+  border: 3px solid #93c5fd;
+  border-radius: 18px;
+  width: 90px;
+  height: 110px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #1e3a8a;
+}
+
+.lane-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #1e3a8a;
+}
+
+/* Fase 2C: Armar los Paquetes */
+.assemble-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.scrambled-packets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scramble-btn {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #fff;
+  border: 3px solid #fde047;
+  padding: 14px 24px;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #9a3412;
+  transition: transform 0.15s;
+}
+
+.scramble-btn:hover {
+  transform: scale(1.05);
+}
+
+.arrow-divider {
+  font-size: 2.5rem;
+  color: #0284c7;
+}
+
+.computer-screen-preview {
+  background: #0f172a;
+  border: 6px solid #475569;
+  border-radius: 20px;
+  padding: 18px;
+  min-width: 280px;
+  color: #fff;
+}
+
+.screen-header {
+  font-weight: 800;
+  color: #38bdf8;
+  margin-bottom: 12px;
+}
+
+.assembled-slots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.slot {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px dashed #64748b;
+  border-radius: 12px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.slot.filled {
+  background: #16a34a;
+  border: 2px solid #86efac;
+  color: #fff;
+}
+
+.final-revealed-emoji {
+  font-size: 5.5rem;
+  margin-top: 10px;
+  animation: fadeInPop 0.5s;
+}
+
+/* ==========================================================================
+   MISIÓN 3: DETECTIVE DE SERVIDORES
+   ========================================================================== */
+.servers-game-board {
+  background: #ffffff;
+  border: 4px solid #38bdf8;
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: var(--shadow-pop);
+}
+
+.client-request-card {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  border: 3px solid #0284c7;
+  border-radius: 20px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 720px;
+  margin: 0 auto 14px;
+}
+
+.client-kid {
+  font-size: 3.8rem;
+  background: #fff;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #0284c7;
+  flex-shrink: 0;
+}
+
+.request-bubble {
+  text-align: left;
+}
+
+.request-tag {
+  display: inline-block;
+  background: #0284c7;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-bottom: 6px;
+}
+
+.request-bubble h3 {
+  font-size: 1.45rem;
+  color: #0f172a;
+}
+
+.router-hub {
+  text-align: center;
+  margin: 12px 0 18px;
+}
+
+.router-badge {
+  display: inline-block;
+  background: #0f172a;
+  color: #22d3ee;
+  border: 2px solid #22d3ee;
+  padding: 8px 20px;
+  border-radius: 99px;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.servers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.server-rack {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  color: #fff;
+  border: 4px solid #475569;
+  border-radius: 20px;
+  padding: 18px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.server-rack:hover {
+  transform: translateY(-6px);
+  border-color: #38bdf8;
+  box-shadow: 0 10px 20px rgba(2, 132, 199, 0.35);
+}
+
+.server-lights {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.server-lights span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: blinkLight 1.4s infinite alternate;
+}
+.server-lights span:nth-child(2) {
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  animation-delay: 0.4s;
+}
+.server-lights span:nth-child(3) {
+  background: #facc15;
+  box-shadow: 0 0 8px #facc15;
+  animation-delay: 0.8s;
+}
+
+@keyframes blinkLight {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+
+.server-icon {
+  font-size: 3.2rem;
+  margin: 6px 0;
+}
+
+.server-rack h4 {
+  font-size: 1.2rem;
+  color: #facc15;
+  margin-bottom: 6px;
+}
+
+.server-rack p {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+/* ==========================================================================
+   MISIÓN 4: ESCUDO PROTECTOR (CORTAFUEGOS)
+   ========================================================================== */
+.firewall-stage {
+  background: #ffffff;
+  border: 4px solid #38bdf8;
+  border-radius: 22px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-pop);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.firewall-progress {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 800;
+  padding: 6px 16px;
+  border-radius: 99px;
+  margin-bottom: 14px;
+}
+
+.incoming-packet-card {
+  background: #f8fafc;
+  border: 4px solid #94a3b8;
+  border-radius: 22px;
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.packet-big-icon {
+  font-size: 4.5rem;
+  margin-bottom: 8px;
+}
+
+.incoming-packet-card h3 {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.incoming-packet-card p {
+  font-size: 1.15rem;
+  color: #475569;
+}
+
+.firewall-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-allow, .btn-block {
+  flex: 1;
+  min-width: 220px;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 18px;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.btn-allow {
+  background: linear-gradient(180deg, #22c55e, #15803d);
+  box-shadow: 0 6px 0 #14532d;
+}
+
+.btn-block {
+  background: linear-gradient(180deg, #ef4444, #b91c1c);
+  box-shadow: 0 6px 0 #7f1d1d;
+}
+
+.btn-allow:hover, .btn-block:hover {
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   DIPLOMA FINAL
+   ========================================================================== */
+.certificate-card {
+  background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+  border: 8px double #d97706;
+  border-radius: 28px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: var(--shadow-pop);
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.cert-ribbon {
+  display: inline-block;
+  background: #d97706;
+  color: #fff;
+  font-weight: 900;
+  padding: 8px 22px;
+  border-radius: 99px;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.certificate-card h1 {
+  font-size: 2.3rem;
+  color: #92400e;
+  margin-bottom: 8px;
+}
+
+.cert-lead {
+  font-size: 1.15rem;
+  color: #78350f;
+}
+
+.cert-student-name {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #0284c7;
+  background: #ffffff;
+  border: 3px dashed #f59e0b;
+  border-radius: 18px;
+  padding: 10px 28px;
+  display: inline-block;
+  margin: 12px 0 20px;
+}
+
+.cert-achievements {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cert-badge {
+  background: #ffffff;
+  border: 2px solid #f59e0b;
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cert-badge span {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #78350f;
+}
+
+.cert-summary {
+  font-size: 1.1rem;
+  color: #451a03;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+/* ==========================================================================
+   MODALES Y UTILIDADES
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-box {
+  background: #ffffff;
+  border: 5px solid #facc15;
+  border-radius: 26px;
+  padding: 28px;
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-pop);
+  animation: fadeInPop 0.3s ease-out;
+}
+
+.modal-trophy {
+  font-size: 3.6rem;
+  margin-bottom: 8px;
+}
+
+.modal-box h2 {
+  font-size: 1.9rem;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.modal-box p {
+  font-size: 1.15rem;
+  color: #334155;
+  margin-bottom: 14px;
+}
+
+.modal-learned-box {
+  background: #f0fdf4;
+  border: 2px solid #22c55e;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.modal-learned-box strong {
+  display: block;
+  color: #15803d;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.teacher-modal-box {
+  border-color: #8b5cf6;
+}
+
+.teacher-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 2px solid #cbd5e1;
+  padding: 12px;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+  border-color: #64748b;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#confettiCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
